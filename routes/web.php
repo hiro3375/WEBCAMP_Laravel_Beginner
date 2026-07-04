@@ -17,10 +17,14 @@ use App\Http\Controllers\TestController;
 |
 */
 
-//タスク管理システム
+// タスク管理システム
 Route::get('/', [AuthController::class, 'index']);
-Route::get('/task/list', [TaskController::class, 'list']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/', [AuthController::class, 'index'])->name('front.index');
+// 認可処理
+Route::middleware(['auth'])->group(function () {
+    Route::get('/task/list', [TaskController::class, 'list']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
 
 Route::get('/welcome', [WelcomeController::class, 'index']);
 Route::get('/welcome/second', [WelcomeController::class, 'second']);
