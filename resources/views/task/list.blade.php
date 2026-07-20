@@ -5,17 +5,27 @@
 
 {{-- メインコンテンツ --}}
 @section('contents')
-    <h1>タスクの登録</h1>
-        @if (session('front.task_register_success') == true)
-            タスクを登録しました！！<br>
-        @endif
-        @if ($errors->any())
-            <div>
-            @foreach ($errors->all() as $error)
-                {{ $error }}<br>
-            @endforeach
-            </div>
-        @endif
+     <h1>タスクの登録</h1>
+            @if (session('front.task_register_success') == true)
+                タスクを登録しました！！<br>
+            @endif
+            @if (session('front.task_delete_success') == true)
+                タスクを削除しました！！<br>
+            @endif
+            @if (session('front.task_completed_success') == true)
+                タスクを完了にしました！！<br>
+            @endif
+            @if (session('front.task_completed_failure') == true)
+                タスクの完了に失敗しました....<br>
+            @endif
+
+            @if ($errors->any())
+                <div>
+                @foreach ($errors->all() as $error)
+                    {{ $error }}<br>
+                @endforeach
+                </div>
+            @endif
         <form action="/task/register" method="post">
             @csrf
             タスク名:<input type="text" name="name" value="{{ old('name') }}"><br>
@@ -28,7 +38,7 @@
         </form>
 
         <h1>タスクの一覧(未実装)</h1>
-        <a href="./top.html">CSVダウンロード(未実装)</a><br>
+         <a href="/task/csv/download">CSVダウンロード</a><br>
         <table border="1">
         <tr>
             <th>タスク名
